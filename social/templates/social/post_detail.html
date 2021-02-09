@@ -1,0 +1,65 @@
+{% extends 'social/base.html' %}
+
+{% block content %}
+<div style="background-color: #f6f5f5; border-radius: 6px;" class="pl-3 pr-3 pb-3" >
+<div class="row">
+    <div class="col-lg-7 pb-4 postarea">
+        <div class="form-inline">
+            <img src="" alt="">
+            <h4 class="username">{{post.user.username|capfirst}}</h4>
+        </div>
+        <small id="date"><i>{{post.date_added}}</i></small>
+        <hr>
+        <h5 style="color: rgb(22, 22, 22);"><strong>{{post.title|capfirst}}</strong></h5>
+        <p>{{post.post}}</p>
+        <br>
+        {% if request.user.id == post.user.id %}
+        <a class="btn btn-outline-danger btn-sm" href="{% url 'delete_confirm' post.id %}">delete post</a>
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'edit_post' post.id %}">edit post</a>
+        {% endif %}
+        <br> <br>
+        <!--get comment-->
+        <p style="color: tomato;" >Comments 📨</p>
+        {% for comment in comment %}
+        <small class="username"><strong>{{comment.user|capfirst}}</strong></small>
+        <small id="date"><i>{{comment.date_added}}</i></small>
+        <p>{{comment.comment}}</p>
+        <hr>
+        {% endfor %}
+        <button class="btn btn-outline-primary btn-sm btn-block" id="comment">comment</button>
+        <form class="d-none" action="" method="POST" id="comment-form">
+            {% csrf_token %}
+            <div>
+                {{cform}}
+            </div>
+            <button class="btn btn-primary btn-sm" >comment</button>
+        </form>
+    </div>
+    <div class="col-lg-5">
+        <p class="text-center">Other post from <strong>{{post.user.username}}</strong></p>
+        <div class="postarea pl-2">
+            {% for userpost in userpost %}
+            <h5><a style="color: rgb(22, 22, 22);" href="{% url 'post_detail' userpost.id %}">{{post.title|capfirst}}</a></h5>
+            <p>{{userpost.post|truncatewords:"20"}}
+                {% if userpost.post|length > 20 %}
+                <a href="{% url 'post_detail' userpost.id %}">Read more &rarr;</a>
+                {% else %}
+                <a href="{% url 'post_detail' userpost.id %}">more detail</a>
+                {% endif %}
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    var commentBtn = document.getElementById('comment')
+
+    commentBtn.addEventListener('click', function(e){
+        e.preventDefault()
+        document.getElementById('comment').classList.add('d-none')
+        document.getElementById('comment-form').classList.remove('d-none')
+    })
+</script>
+{% endblock %}

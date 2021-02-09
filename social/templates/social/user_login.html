@@ -1,0 +1,36 @@
+{% extends 'social/base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4">
+            <legend class="text-center">User Login</legend>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input class="form-control" type="text" placeholder="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="username">Password</label>
+                    <input class="form-control" type="password" placeholder="Password" name="password" required>
+                </div>
+                <div class="form-inline">
+                    <button class="btn btn-primary btn-sm">sign in</button>
+                    <p class="ml-2"><i>Don't have account? <a href="{% url 'register' %}">sign up</i></a></p>
+                </div>
+                <hr>
+                <p>Forget password? <a href="">Reset</a></p>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
+
+{% endblock %}

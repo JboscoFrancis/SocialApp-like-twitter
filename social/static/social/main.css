@@ -1,0 +1,53 @@
+body{
+    background-color: #c1a1d3;
+}
+
+.bg-info{
+    background-color: #6930c3!important
+}
+
+.postarea{
+    border-radius: 6px;
+    border: 1px solid #f0e5d8;
+    background-color: #f6f5f5;
+}
+
+.post-btn{
+    border-radius: 6px;
+    border: 1px solid #f0e5d8;
+    padding: 16px;
+    color: #f6f5f5;
+    background-color: #6155a6;
+}
+
+.username{
+    color: rgb(3, 35, 104)!important;
+}
+
+#date{
+    color: rgb(105, 152, 253);
+}
+
+p{
+    color: rgb(33, 2, 61);
+}
+
+.btn-like{
+    border-radius: 20px;
+    background-color: none;
+    padding: 0px;
+}
+
+hr{
+    background-color: rgb(197, 252, 245);
+}
+
+.card-profile{
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.rounded-circle{
+    border: 2px solid #6930c3;
+}

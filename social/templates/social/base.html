@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title%}SocialApp{% endblock %}</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/0fd3fb4178.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'social/main.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-info">
+          <div class="container">
+            <a class="navbar-brand mr-4" href="/"><b>SocialApp</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
+              </div>
+              {% if request.user.is_authenticated %}
+              <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="{% url 'user_profile' user.id %}">Hello!. <strong style="color: #ee99a0;">{{user.username|capfirst}}</strong></a>
+              </div>
+              {% endif %}
+              <!-- Navbar Right Side -->
+
+              <div class="navbar-nav">
+                  {% if request.user.is_authenticated %}
+                  <a class="nav-item nav-link" href="{% url 'user_profile' user.id %}">Profile</a>
+                  <a class="nav-item nav-link" href="{% url 'userlogout' %}">logout</a>
+
+                  {% else %}
+                  <a class="nav-item nav-link" href="{% url 'userlogin' %}">Login</a>
+                  {% endif %}
+                
+              </div>
+            </div>
+          </div>
+        </nav>
+    </header>
+    <div class="container mt-3">
+      {% for message in messages %}
+      <p class="alert alert-{{message.tags}}">{{message}}</p>
+      {% endfor %}
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script type="text/javascript" src="{% static 'social/main.js' %}" ></script>
+</body>
+</html>

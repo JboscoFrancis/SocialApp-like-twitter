@@ -1,0 +1,25 @@
+{% extends 'social/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-6">
+        <div class="card card-profile">
+            <img class="rounded-circle mb-3" width="150" src="{{user.profile.profile_pic.url}}" alt="">
+        </div><br>
+        <p>Change your profile</p>
+        <form style="border-radius: 4px; border: 1px solid grey; padding: 6px" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{p_form}}
+            <br>
+            {{u_form}}
+            <button class="btn btn-primary mt-4">update</button>
+        </form>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+</div>
+{% endblock %}

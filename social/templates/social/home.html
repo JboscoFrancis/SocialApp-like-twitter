@@ -1,0 +1,74 @@
+{% extends 'social/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-7 pb-3 postarea">
+        {% for post in post %}
+        <div class="mb-3">
+            <div class="form-inline">
+                <img class="rounded-circle mr-2" width="40" src="{{ post.user.profile.profile_pic.url }}" alt="Profile">
+                <h4><a class="username" href="{% url 'user_profile' post.user.id %}">{{post.user.username|capfirst}}</a></h4>
+                <small class="ml-2" id="date"><i>{{post.date_added}}</i></small>
+            </div>
+            
+            <h5><a style="color: rgb(22, 22, 22);" href="{% url 'post_detail' post.id %}">{{post.title|capfirst}}</a></h5>
+            <p>{{post.post|truncatewords:"50"}}
+                <!--display read more button only if words length is > 80-->
+                {% if post.post|length > 50 %}
+                <a href="{% url 'post_detail' post.id %}">Read more &rarr;</a></p>
+                {% endif %}
+            {% if post.likes.count == 0 %}
+            <!-- if no one likes post  -->
+            <br>
+            <button data-post="{{post.id}}" data-action="like" class="btn btn-like btn-sm like ml-5">💙</button>
+            {% else %}
+            <br>
+                <!--if user has not likes the post, then will see only like button -->
+                {% if request.user not in post.likes.all %}
+                <button data-post="{{post.id}}" data-action="like" class="btn btn-like btn-sm  like ml-5">💙</button>
+                {% else %}
+                <!--if user liked the post, then will see only unlike button-->
+                <button data-post="{{post.id}}" data-action="unlike" class="btn btn-like btn-sm  unlike ml-5">🧡</button>
+                {% endif %}
+                <small style="color: rgb(59, 68, 97);">like {{post.likes.count}}</small>
+            {% endif %}
+        </div>
+        <hr>
+        {% endfor %}
+        <hr>
+           <!-- paginator starts-- -->
+{% if post.has_other_pages %}
+<div class="pagination text-center mt-3 center">
+    <span class="step-links text-center">
+        {% if post.has_previous %}
+            <a class="btn btn-outline-info btn-sm" href="?page=1">&laquo; first</a>
+            <a class="btn btn-outline-info btn-sm" href="?page={{ post.previous_page_number }}">previous</a>
+        {% endif %}
+
+        {% for num in post.paginator.page_range %}
+            {% if post.number == num %}
+                <a class="btn btn-info btn-sm" href="?page={{num}}">{{num}}</a>
+            {% elif num > post.number|add:'-3' and num < post.number|add:'3'   %}
+                <a class="btn btn-outline-info btn-sm" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if post.has_next %}
+            <a class="btn btn-outline-info btn-sm"  href="?page={{ post.next_page_number }}">next</a>
+            <a class="btn btn-outline-info btn-sm"  href="?page={{ post.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+    </div>
+    <div class="col-md-5">
+        <button class="btn btn-block post-btn" id="post">Add new Post</button>
+        <form class="d-none" id="form-post" action="" method="POST">
+            {% csrf_token %}
+            {{form}}
+            <button class="btn btn-info">Post</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

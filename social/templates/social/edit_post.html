@@ -1,0 +1,15 @@
+{% extends 'social/base.html' %}
+
+{% block content %}
+
+<div class="edit-form">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form}}
+
+        <button class="btn btn-primary btn-sm">Save</button>
+
+    </form>
+</div>
+
+{% endblock %}

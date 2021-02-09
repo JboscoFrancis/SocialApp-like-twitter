@@ -1,0 +1,43 @@
+{% extends 'social/base.html' %}
+
+{% block content %}
+<div style="background-color: #f6f5f5; border-radius: 6px;" class="pl-3 pr-3" >
+    <div class="row">
+        <div class="col-md-5 mb-4">
+            <div class="card mb-3 mt-2 p-2 card-profile">
+                <img class="rounded-circle" width="150" src="{{profile.profile.profile_pic.url}}" alt="Profile">
+                <h5 class="username">{{profile.username|capfirst}}</h5>
+                {% if request.user.id == profile.id%}
+                <a href="{% url 'update_profile' profile.id %}">Edit your profile</a>
+                {% endif %}
+            </div>
+            <div>
+                <p>following {{followers}}</p>
+                <p>followers {{following}}</p>
+                <small>total user post: {{post.count}}</small>
+            </div>
+            {%if request.user.id == profile.id %}
+            {% else %}
+                {% if request.user not in follow.follower.all %}
+                <small><button data-profile="{{profile.id}}" data-action="follow" class="btn btn-primary btn-sm follow">Follow</button></small>
+                {% else %}
+                <small><button data-profile="{{profile.id}}" data-action="unfollow" class="btn btn-primary btn-sm unfollow">Unfollow</button></small>
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="col-md-7">
+            <p style="text-align: center;">Posts</p>
+            <div>
+                {% for post in post %}
+                <p>{{post.post|truncatewords:"50"}}</p>
+                <a href="{% url 'post_detail' post.id %}">Read more &rarr;</a></p>
+                <small>likes {{post.likes.count}}</small>
+                <hr>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

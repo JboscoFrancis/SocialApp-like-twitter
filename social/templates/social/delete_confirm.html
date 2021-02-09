@@ -1,0 +1,9 @@
+{% extends 'social/base.html' %}
+
+{% block content %}
+<div class="text-center">
+    <p>Are you sure you want to delete post </p>
+    <button class="btn btn-outline-danger"><a href="{% url 'delete_post' post.id %}">Yes, delete</a></button>
+    <button class="btn btn-outline-info"><a href="{% url 'post_detail' post.id %}">No, back</a></button>
+</div>
+{% endblock %}
