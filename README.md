@@ -8,4 +8,4 @@ A twitter like app. posting, like or unlike, comment and following or unfollow
 * Terminal will start a server at "http://127.0.0.1:8000/"
 * Go to your browser url and enter the address http://127.0.0.1:8000/ and there you go.
 * login username bosco password github2021, login and enjoy.
-**Note:** you must have python,django and pillow installed
+* **Note:** you must have python,django and pillow installed
